@@ -2,8 +2,10 @@ package tech.collin.labtwo;
 
 import java.net.URL;
 import java.net.MalformedURLException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.IOException;
 
@@ -11,15 +13,16 @@ public class Main {
     public static void main(String[] args) {
         
         try {
-            URL secure = new URL("https://www.tarleton.edu");
-            URL nonsecure = new URL("http://www.tarleton.edu");
-            InputStreamReader isr = new InputStreamReader(secure.openStream(), "UTF-8");
-            BufferedReader br = new BufferedReader(isr);
-            
-            String res = "";
-            while((res = br.readLine()) != null) {
-                System.out.println(res);
+            InputStream is = new URL("https://www.tarleton.edu").openStream();
+            File target = new File("output.html");
+            OutputStream os = new FileOutputStream(target);
+            byte[] buffer = new byte[8 * 1024];
+            int bytes;
+            while((bytes = is.read(buffer)) != -1) {
+                os.write(buffer, 0, bytes);
             }
+            is.close();
+            os.close();
         }catch(MalformedURLException e) {
             System.out.println("[******   MALFORMED URL   ******]");
             e.printStackTrace();
