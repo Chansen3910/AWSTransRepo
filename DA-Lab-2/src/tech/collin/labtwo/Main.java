@@ -11,11 +11,9 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        
         try {
-            InputStream is = new URL("https://www.tarleton.edu").openStream();
-            File target = new File("output.html");
-            OutputStream os = new FileOutputStream(target);
+            InputStream is = new URL((args.length > 0)? (args[0]): ("https://www.google.com")).openStream();
+            OutputStream os = new FileOutputStream(new File((args.length > 1)? (args[1]): ("output.html")));
             byte[] buffer = new byte[8 * 1024];
             int bytes;
             while((bytes = is.read(buffer)) != -1) {
@@ -30,13 +28,12 @@ public class Main {
             System.out.println("[******   CHARSET CODEC NOT SUPPORTED   ******]");
             e.printStackTrace();
         }catch(IOException e) {
-            System.out.println("[******   READER IO EXCEPTION   ******]");
+            System.out.println("[******   IO STREAM EXCEPTION   ******]");
             e.printStackTrace();
         }catch(Exception e) {
             System.out.println("[******   GENERIC EXCEPTION   ******]");
             e.printStackTrace();
         }
-
         System.exit(0);
     }
 }
