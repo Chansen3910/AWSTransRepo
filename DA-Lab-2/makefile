@@ -8,9 +8,6 @@ SOURCE=src/tech/collin/$(PACKAGE)/
 FILES=-C build .
 DEPENDENCIES=-cp $(ROOTDIR)/external/*.jar
 
-run: clean
-	java -jar $(JARNAME)
-
 clean: archive
 	rm -r ./build/
 
